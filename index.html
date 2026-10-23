@@ -555,8 +555,27 @@ Escuchar una columna
 <div style="position: relative; overflow: hidden; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: clamp(28px, 5vw, 72px); padding: clamp(24px, 4vw, 56px); border-radius: 36px; border: 2px solid #0E0E12; background: radial-gradient(700px 420px at 12% 8%, rgba(43,227,122,0.30), transparent 62%), radial-gradient(640px 420px at 100% 100%, rgba(255,77,77,0.26), transparent 60%), #0A0A0C; color: #FFFFFF; box-shadow: 10px 10px 0 #0E0E12">
 
 <div style="flex: 0 1 330px; width: 100%; max-width: 330px; padding: 10px; border-radius: 44px; background: linear-gradient(160deg, #3A3A44 0%, #111115 55%, #26262D 100%); border: 1px solid rgba(255,255,255,0.18); box-shadow: 0 0 0 2px #000, 0 30px 80px rgba(0,0,0,0.65), 0 0 90px rgba(43,227,122,0.22)">
-<div style="position: relative; width: 100%; aspect-ratio: 9 / 16; border-radius: 34px; overflow: hidden; background: #0E0E12">
-<video id="{{v.domId}}" src="{{v.src}}" poster="{{v.poster}}" controls controlsList="nodownload" playsinline preload="metadata" aria-label="{{v.title}}" onPlay="{{v.onPlay}}" onPause="{{v.onPause}}" onEnded="{{v.onEnd}}" style="width: 100%; height: 100%; object-fit: cover; display: block"></video>
+<div style="position: relative; width: 100%; aspect-ratio: 9 / 16; border-radius: 34px; background: #0E0E12">
+<div style="position: {{v.pos}}; top: 0; right: 0; bottom: 0; left: 0; z-index: {{v.z}}; background: {{v.wbg}}">
+<div style="position: absolute; top: 0; bottom: 0; left: {{v.sl}}; width: {{v.sw}}; width: {{v.sw2}}; transform: {{v.st}}; border-radius: {{v.srad}}; overflow: hidden; background: #0E0E12">
+<video id="{{v.domId}}" src="{{v.src}}" poster="{{v.poster}}" controls controlsList="nodownload" playsinline preload="metadata" aria-label="{{v.title}}" onPlay="{{v.onPlay}}" onPause="{{v.onPause}}" onEnded="{{v.onEnd}}" style="width: 100%; height: 100%; object-fit: {{v.fit}}; display: block"></video>
+<sc-if value="{{v.full}}" hint-placeholder-val="{{ false }}">
+<div style="position: absolute; left: 0; right: 0; top: 0; height: 120px; background: linear-gradient(180deg, rgba(0,0,0,0.6), transparent); pointer-events: none"></div>
+<div style="position: absolute; left: 0; right: 0; bottom: 0; height: 280px; background: linear-gradient(0deg, rgba(0,0,0,0.75), transparent); pointer-events: none"></div>
+<button onClick="{{v.close}}" aria-label="Cerrar" style="position: absolute; top: 14px; left: 14px; width: 44px; height: 44px; border: 0; border-radius: 50%; background: rgba(0,0,0,0.5); color: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+<div style="position: absolute; top: 20px; right: 18px; display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 700; color: #FFFFFF; pointer-events: none">En 60"</div>
+<div style="position: absolute; right: 12px; bottom: 120px; display: flex; flex-direction: column; gap: 18px; align-items: center">
+<button onClick="{{v.readFs}}" aria-label="Leer el artículo" style="display: flex; flex-direction: column; align-items: center; gap: 4px; border: 0; background: transparent; color: #FFFFFF; font-size: 12px; font-weight: 600; cursor: pointer; padding: 0"><span style="width: 52px; height: 52px; border-radius: 50%; background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.35); display: flex; align-items: center; justify-content: center; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"></path><path d="M14 3v5h5M9 13h6M9 17h6"></path></svg></span>Artículo</button>
+<button onClick="{{v.share}}" aria-label="Compartir" style="display: flex; flex-direction: column; align-items: center; gap: 4px; border: 0; background: transparent; color: #FFFFFF; font-size: 12px; font-weight: 600; cursor: pointer; padding: 0"><span style="width: 52px; height: 52px; border-radius: 50%; background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.35); display: flex; align-items: center; justify-content: center; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7M16 6l-4-4-4 4M12 2v13"></path></svg></span>Compartir</button>
+<button onClick="{{v.copy}}" aria-label="Copiar enlace" style="display: flex; flex-direction: column; align-items: center; gap: 4px; border: 0; background: transparent; color: #FFFFFF; font-size: 12px; font-weight: 600; cursor: pointer; padding: 0"><span style="width: 52px; height: 52px; border-radius: 50%; background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.35); display: flex; align-items: center; justify-content: center; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"></path></svg></span>Enlace</button>
+</div>
+<div style="position: absolute; left: 16px; right: 90px; bottom: 76px; display: flex; flex-direction: column; gap: 6px; color: #FFFFFF; pointer-events: none">
+<span style="font-size: 15px; font-weight: 700">@jorgesousa · En 60"</span>
+<span style="font-size: 16px; line-height: 1.3; font-weight: 500">{{v.title}}</span>
+</div>
+</sc-if>
+</div>
+</div>
 </div>
 </div>
 
@@ -818,7 +837,7 @@ class Component extends DCLogic {
       this.audio = a;
     } catch (e) { this.audio = null; }
     this.vtimer = setInterval(() => { try { document.querySelectorAll('video[id^="v60-"]').forEach((el) => { const id = el.id.slice(4); const cur = this.state.vs[id] || {}; const t = el.currentTime || 0; const d = el.duration || cur.d || 59; if (Math.abs((cur.t || 0) - t) > 0.2 || cur.d !== d) this.setState({ vs: { ...this.state.vs, [id]: { ...cur, t, d } } }); }); } catch (e) {} }, 250);
-    this.onKey = (e) => { if (e.key === 'Escape') { if (this.state.ig) this.setState({ ig: null }); else if (this.state.reader) this.setState({ reader: null }); } };
+    this.onKey = (e) => { if (e.key === 'Escape') { if (this.state.fs) this.closeFs(); else if (this.state.ig) this.setState({ ig: null }); else if (this.state.reader) this.setState({ reader: null }); } };
     document.addEventListener('keydown', this.onKey);
     this.onHash = () => {
       let h = '';
@@ -976,6 +995,10 @@ class Component extends DCLogic {
     } catch (e) { if (e && e.name === 'AbortError') return; }
     this.igDownload();
   }
+
+  openFs(id) { try { document.body.style.overflow = 'hidden'; } catch (e) {} this.setState({ fs: id }); }
+
+  closeFs() { try { document.body.style.overflow = ''; document.querySelectorAll('video').forEach((x) => x.pause()); } catch (e) {} this.setState({ fs: null }); }
 
   seekTo(t) {
     const v = Math.max(0, Math.min(this.DUR - 1, t));
@@ -1197,10 +1220,11 @@ class Component extends DCLogic {
       const st = s.vs[v.id] || {};
       const d = st.d || v.dur; const t = st.t || 0;
       const link = pageUrl + '#' + v.id;
+      const isFull = s.fs === v.id;
       const jump = (to, play) => { const el = getV(v.id); if (el) { try { el.currentTime = Math.max(0, Math.min(d - 0.1, to)); } catch (e) {} if (play && el.paused) { const p = el.play(); if (p && p.catch) p.catch(() => {}); } } setVs(v.id, { t: Math.max(0, Math.min(d, to)) }); };
       let ai = 0; v.chaps.forEach((c, i) => { if (t >= c[0]) ai = i; });
       return {
-        domId: 'v60-' + v.id, title: v.title, chip: 'Vídeo · ' + mm(v.dur), src: v.src, poster: v.poster,
+        domId: 'v60-' + v.id, full: isFull, fit: isFull ? 'contain' : 'cover', pos: isFull ? 'fixed' : 'absolute', z: isFull ? '140' : '1', wbg: isFull ? '#000' : 'transparent', sl: isFull ? '50%' : '0', sw: isFull ? 'min(100vw, 56.25vh)' : '100%', sw2: isFull ? 'min(100vw, 56.25dvh)' : '100%', st: isFull ? 'translateX(-50%)' : 'none', srad: isFull ? '0' : '34px', close: () => this.closeFs(), readFs: () => { this.closeFs(); this.setState({ reader: v.art }); }, title: v.title, chip: 'Vídeo · ' + mm(v.dur), src: v.src, poster: v.poster,
         pct: Math.min(100, Math.round((t / d) * 1000) / 10), left: mm(Math.round(d - t)),
         playing: !!st.p, paused: !st.p, toggleLabel: st.p ? 'Pausar' : 'Reproducir',
         segs: v.chaps.map((c, i) => { const end = i + 1 < v.chaps.length ? v.chaps[i + 1][0] : d; const len = Math.max(0.1, end - c[0]); return { len: Math.round(len * 10) / 10, w: Math.max(0, Math.min(100, ((t - c[0]) / len) * 100)) }; }),
@@ -1209,7 +1233,7 @@ class Component extends DCLogic {
           bar: i === ai ? '#2BE37A' : 'transparent', bg: i === ai ? 'rgba(43,227,122,0.14)' : 'transparent', fg: i === ai ? '#FFFFFF' : '#C9CAD6',
           go: () => jump(c[0], true)
         })),
-        onPlay: () => { if (this.audio) this.audio.pause(); setVs(v.id, { p: true }); },
+        onPlay: () => { if (this.audio) this.audio.pause(); setVs(v.id, { p: true }); if (!this.state.fs) this.openFs(v.id); },
         onPause: () => setVs(v.id, { p: false }),
         onEnd: (e) => { try { e.target.currentTime = 0; } catch (x) {} setVs(v.id, { p: false, t: 0 }); },
         toggle: () => { const el = getV(v.id); if (!el) return; if (el.paused) { const p = el.play(); if (p && p.catch) p.catch(() => {}); } else el.pause(); },
