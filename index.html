@@ -548,57 +548,62 @@ Escuchar una columna
 <section id="en-60" style="max-width: 1240px; margin: 0 auto; padding: 24px clamp(16px, 4vw, 40px) 96px; display: flex; flex-direction: column; gap: 40px">
 <div style="display: flex; flex-direction: column; gap: 12px">
 <span style="font-size: 14px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #3A3A46">02 — Vídeo corto</span>
-<h2 style="margin: 0; display: flex; align-items: center; gap: 16px; font-size: clamp(40px, 6vw, 72px); line-height: 1; font-weight: 800; letter-spacing: -0.03em">En 60"<span style="display: inline-flex; width: clamp(40px, 5.4vw, 64px); height: clamp(40px, 5.4vw, 64px); align-items: center; justify-content: center; border-radius: 50%; background: var(--g, #2BE37A); border: 2px solid #0E0E12"><svg viewBox="0 0 24 24" fill="none" stroke="#0E0E12" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 58%; height: 58%"><circle cx="12" cy="13.5" r="7.5"></circle><path d="M12 9.5v4l2.5 1.5M9.5 2.5h5M12 2.5v3.5M19 6l1.5-1.5"></path></svg></span></h2>
+<h2 style="margin: 0; display: flex; align-items: center; gap: 16px; font-size: clamp(40px, 6vw, 72px); line-height: 1; font-weight: 800; letter-spacing: -0.03em">En 60"<span style="display: inline-flex; width: clamp(40px, 5.4vw, 64px); height: clamp(40px, 5.4vw, 64px); align-items: center; justify-content: center; border-radius: 50%; background: #2BE37A; border: 2px solid #0E0E12"><svg viewBox="0 0 24 24" fill="none" stroke="#0E0E12" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width: 58%; height: 58%"><circle cx="12" cy="13.5" r="7.5"></circle><path d="M12 9.5v4l2.5 1.5M9.5 2.5h5M12 2.5v3.5M19 6l1.5-1.5"></path></svg></span></h2>
 <p style="margin: 0; max-width: 560px; font-size: 18px; line-height: 1.5; color: #3A3A46">La actualidad explicada en un minuto: lo esencial, sin rodeos.</p>
 </div>
-<div style="display: flex; flex-wrap: wrap; gap: 32px">
 <sc-for list="{{vids}}" as="v" hint-placeholder-count="1">
-<div style="flex: 0 1 360px; max-width: 100%; background: linear-gradient(180deg, #2A2A33 0%, #16161B 70%); color: #FFFFFF; border-radius: 18px; padding: 18px; display: flex; flex-direction: column; gap: 16px; box-shadow: 0 24px 60px rgba(0,0,0,0.35)">
-<div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #B3B3BD">
-<span>Reproduciendo vídeo</span>
-<span style="padding: 4px 10px; background: #FFE14D; color: #0E0E12; border-radius: 999px; white-space: nowrap">{{v.chip}}</span>
-</div>
-<div style="position: relative; width: 100%; aspect-ratio: 9 / 16; border-radius: 12px; overflow: hidden; background: #0E0E12; box-shadow: 0 10px 28px rgba(0,0,0,0.55)">
+<div style="position: relative; overflow: hidden; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: clamp(28px, 5vw, 72px); padding: clamp(24px, 4vw, 56px); border-radius: 36px; border: 2px solid #0E0E12; background: radial-gradient(700px 420px at 12% 8%, rgba(43,227,122,0.30), transparent 62%), radial-gradient(640px 420px at 100% 100%, rgba(255,77,77,0.26), transparent 60%), #0A0A0C; color: #FFFFFF; box-shadow: 10px 10px 0 #0E0E12">
+
+<div style="flex: 0 1 330px; width: 100%; max-width: 330px; padding: 10px; border-radius: 44px; background: linear-gradient(160deg, #3A3A44 0%, #111115 55%, #26262D 100%); border: 1px solid rgba(255,255,255,0.18); box-shadow: 0 0 0 2px #000, 0 30px 80px rgba(0,0,0,0.65), 0 0 90px rgba(43,227,122,0.22)">
+<div style="position: relative; width: 100%; aspect-ratio: 9 / 16; border-radius: 34px; overflow: hidden; background: #0E0E12">
 <video id="{{v.domId}}" src="{{v.src}}" poster="{{v.poster}}" playsinline preload="metadata" aria-label="{{v.title}}" onPlay="{{v.onPlay}}" onPause="{{v.onPause}}" onEnded="{{v.onEnd}}" style="width: 100%; height: 100%; object-fit: cover; display: block"></video>
 <button onClick="{{v.toggle}}" aria-label="Reproducir o pausar el vídeo" style="position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer">
 <sc-if value="{{v.paused}}" hint-placeholder-val="{{ true }}">
-<span style="width: 76px; height: 76px; border-radius: 50%; background: rgba(255,255,255,0.94); color: #0E0E12; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 24px rgba(0,0,0,0.5)"><svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg></span>
+<span style="width: 84px; height: 84px; border-radius: 50%; background: rgba(255,255,255,0.18); border: 1.5px solid rgba(255,255,255,0.7); color: #FFFFFF; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px)"><svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="margin-left: 4px"><path d="M8 5v14l11-7z"></path></svg></span>
 </sc-if>
 </button>
+<div style="position: absolute; left: 14px; right: 14px; top: 14px; display: flex; gap: 4px; pointer-events: none">
+<sc-for list="{{v.segs}}" as="g" hint-placeholder-count="3">
+<div style="flex: {{g.len}} 1 0; height: 3px; border-radius: 2px; background: rgba(255,255,255,0.32); overflow: hidden"><div style="width: {{g.w}}%; height: 100%; background: #FFFFFF"></div></div>
+</sc-for>
 </div>
-<div style="display: flex; flex-direction: column; gap: 4px; min-width: 0">
-<h3 style="margin: 0; font-size: 18px; line-height: 1.15; font-weight: 800; letter-spacing: -0.01em">{{v.title}}</h3>
-<span style="font-size: 13px; font-weight: 600; color: #B3B3BD">Jorge Sousa · En 60"</span>
 </div>
-<div style="display: flex; flex-direction: column; gap: 6px">
-<input class="sp-range" type="range" min="0" max="{{v.dMax}}" step="1" value="{{v.tVal}}" onChange="{{v.seek}}" aria-label="Posición del vídeo" style="background: linear-gradient(to right, #FFFFFF {{v.pct}}%, #4D4D55 {{v.pct}}%)">
-<div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 600; color: #B3B3BD"><span>{{v.tNow}}</span><span>{{v.dNow}}</span></div>
 </div>
-<div style="display: flex; align-items: center; justify-content: center; gap: 22px">
-<button onClick="{{v.back}}" aria-label="Retroceder 10 segundos" style="min-width: 48px; min-height: 48px; border: 0; background: transparent; color: #FFFFFF; font-size: 15px; font-weight: 700">−10</button>
-<sc-if value="{{v.paused}}" hint-placeholder-val="{{ true }}">
-<button onClick="{{v.toggle}}" aria-label="Reproducir" style="width: 68px; height: 68px; border: 0; border-radius: 50%; background: #FFFFFF; color: #0E0E12; display: flex; align-items: center; justify-content: center">
-<svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
+
+<div style="flex: 1 1 360px; min-width: 0; display: flex; flex-direction: column; gap: 22px">
+<div style="display: flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #B3B3BD">
+<span style="padding: 5px 12px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.35); color: #FFFFFF">{{v.chip}}</span><span>Jorge Sousa</span>
+</div>
+<div style="display: flex; align-items: center; gap: 22px">
+<button onClick="{{v.toggle}}" aria-label="{{v.toggleLabel}}" style="flex: none; width: 92px; height: 92px; padding: 0; border: 0; border-radius: 50%; background: conic-gradient(#2BE37A {{v.pct}}%, rgba(255,255,255,0.16) 0); display: flex; align-items: center; justify-content: center; cursor: pointer">
+<span style="width: 80px; height: 80px; border-radius: 50%; background: #0A0A0C; color: #FFFFFF; display: flex; align-items: center; justify-content: center">
+<sc-if value="{{v.paused}}" hint-placeholder-val="{{ true }}"><svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="margin-left: 3px"><path d="M8 5v14l11-7z"></path></svg></sc-if>
+<sc-if value="{{v.playing}}" hint-placeholder-val="{{ false }}"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"></rect><rect x="14" y="5" width="4" height="14" rx="1"></rect></svg></sc-if>
+</span>
 </button>
-</sc-if>
-<sc-if value="{{v.playing}}" hint-placeholder-val="{{ false }}">
-<button onClick="{{v.toggle}}" aria-label="Pausar" style="width: 68px; height: 68px; border: 0; border-radius: 50%; background: #FFFFFF; color: #0E0E12; display: flex; align-items: center; justify-content: center">
-<svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"></rect><rect x="14" y="5" width="4" height="14" rx="1"></rect></svg>
-</button>
-</sc-if>
-<button onClick="{{v.fwd}}" aria-label="Avanzar 10 segundos" style="min-width: 48px; min-height: 48px; border: 0; background: transparent; color: #FFFFFF; font-size: 15px; font-weight: 700">+10</button>
+<div style="display: flex; flex-direction: column; min-width: 0">
+<span style="font-size: clamp(56px, 8vw, 104px); line-height: 0.95; font-weight: 800; letter-spacing: -0.04em; font-variant-numeric: tabular-nums">{{v.left}}</span>
+<span style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #B3B3BD">restantes</span>
 </div>
-<a href="#" onClick="{{v.read}}" style="align-self: center; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-size: 15px; font-weight: 600; color: #FFFFFF; text-decoration: underline; text-underline-offset: 4px">
-Leer el artículo completo
-<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"></path></svg>
-</a>
-<div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 8px">
-<button onClick="{{v.share}}" class="btn" style="display: inline-flex; align-items: center; min-height: 40px; padding: 0 16px; border: 2px solid #4D4D55; border-radius: 999px; background: transparent; color: #FFFFFF; font-size: 14px; font-weight: 600">Compartir</button>
-<button onClick="{{v.copy}}" class="btn" style="display: inline-flex; align-items: center; min-height: 40px; padding: 0 16px; border: 2px solid #4D4D55; border-radius: 999px; background: transparent; color: #FFFFFF; font-size: 14px; font-weight: 600">Copiar enlace</button>
+</div>
+<h3 style="margin: 0; font-family: 'Newsreader', serif; font-size: clamp(26px, 3.2vw, 38px); line-height: 1.1; font-weight: 600; letter-spacing: -0.01em">{{v.title}}</h3>
+<div role="list" aria-label="Capítulos del vídeo" style="display: flex; flex-direction: column; border-top: 1px solid rgba(255,255,255,0.14)">
+<sc-for list="{{v.chaps}}" as="c" hint-placeholder-count="4">
+<button role="listitem" onClick="{{c.go}}" style="display: flex; align-items: center; gap: 14px; min-height: 46px; padding: 8px 12px 8px 10px; border: 0; border-bottom: 1px solid rgba(255,255,255,0.14); border-left: 3px solid {{c.bar}}; background: {{c.bg}}; color: {{c.fg}}; text-align: left; font-size: 16px; font-weight: 600; cursor: pointer">
+<span style="flex: none; width: 26px; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; opacity: 0.7; font-variant-numeric: tabular-nums">{{c.n}}</span>
+<span style="flex: 1; min-width: 0">{{c.label}}</span>
+<span style="flex: none; font-size: 13px; opacity: 0.75; font-variant-numeric: tabular-nums">{{c.time}}</span>
+</button>
+</sc-for>
+</div>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px">
+<button onClick="{{v.read}}" class="btn" style="display: inline-flex; align-items: center; gap: 8px; min-height: 46px; padding: 0 20px; border: 2px solid #2BE37A; border-radius: 999px; background: #2BE37A; color: #0E0E12; font-size: 15px; font-weight: 700">Leer el artículo completo<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"></path></svg></button>
+<button onClick="{{v.share}}" class="btn" style="display: inline-flex; align-items: center; min-height: 46px; padding: 0 18px; border: 2px solid rgba(255,255,255,0.45); border-radius: 999px; background: transparent; color: #FFFFFF; font-size: 15px; font-weight: 600">Compartir</button>
+<button onClick="{{v.copy}}" class="btn" style="display: inline-flex; align-items: center; min-height: 46px; padding: 0 18px; border: 2px solid rgba(255,255,255,0.45); border-radius: 999px; background: transparent; color: #FFFFFF; font-size: 15px; font-weight: 600">Copiar enlace</button>
+</div>
 </div>
 </div>
 </sc-for>
-</div>
 </section>
 
 <!-- ESCUCHA -->
@@ -1213,7 +1218,8 @@ class Component extends DCLogic {
       };
     };
     const vidList = [
-      { id: 'en-60', art: 'nietos', dur: 59, title: 'Ley de Nietos: qué es y por qué se habla de ella', src: 'media/ley-de-nietos-60s.mp4', poster: 'media/poster-ley-de-nietos.jpg' }
+      { id: 'en-60', art: 'nietos', dur: 59, title: 'Ley de Nietos: qué es y por qué se habla de ella', src: 'media/ley-de-nietos-60s.mp4', poster: 'media/poster-ley-de-nietos.jpg',
+        chaps: [[0, 'La pregunta'], [3.5, '¿Qué es?'], [13.5, '160.000 sin voto'], [18.3, 'El motivo'], [32.5, 'La respuesta'], [40.5, 'Rechazado'], [45.9, '¿Y ahora qué?']] }
     ];
     const mm = (x) => { x = Math.max(0, Math.floor(x || 0)); return Math.floor(x / 60) + ':' + String(x % 60).padStart(2, '0'); };
     const getV = (id) => document.getElementById('v60-' + id);
@@ -1222,18 +1228,22 @@ class Component extends DCLogic {
       const st = s.vs[v.id] || {};
       const d = st.d || v.dur; const t = st.t || 0;
       const link = pageUrl + '#' + v.id;
-      const jump = (to) => { const el = getV(v.id); if (el) { try { el.currentTime = Math.max(0, Math.min(d - 0.1, to)); } catch (e) {} } setVs(v.id, { t: Math.max(0, Math.min(d, to)) }); };
+      const jump = (to, play) => { const el = getV(v.id); if (el) { try { el.currentTime = Math.max(0, Math.min(d - 0.1, to)); } catch (e) {} if (play && el.paused) { const p = el.play(); if (p && p.catch) p.catch(() => {}); } } setVs(v.id, { t: Math.max(0, Math.min(d, to)) }); };
+      let ai = 0; v.chaps.forEach((c, i) => { if (t >= c[0]) ai = i; });
       return {
         domId: 'v60-' + v.id, title: v.title, chip: 'Vídeo · ' + mm(v.dur), src: v.src, poster: v.poster,
-        pct: Math.min(100, Math.round((t / d) * 1000) / 10), tNow: mm(t), dNow: mm(d), tVal: Math.floor(t), dMax: Math.ceil(d),
-        playing: !!st.p, paused: !st.p,
+        pct: Math.min(100, Math.round((t / d) * 1000) / 10), left: mm(Math.round(d - t)),
+        playing: !!st.p, paused: !st.p, toggleLabel: st.p ? 'Pausar' : 'Reproducir',
+        segs: v.chaps.map((c, i) => { const end = i + 1 < v.chaps.length ? v.chaps[i + 1][0] : d; const len = Math.max(0.1, end - c[0]); return { len: Math.round(len * 10) / 10, w: Math.max(0, Math.min(100, ((t - c[0]) / len) * 100)) }; }),
+        chaps: v.chaps.map((c, i) => ({
+          n: String(i + 1).padStart(2, '0'), label: c[1], time: mm(c[0]),
+          bar: i === ai ? '#2BE37A' : 'transparent', bg: i === ai ? 'rgba(43,227,122,0.14)' : 'transparent', fg: i === ai ? '#FFFFFF' : '#C9CAD6',
+          go: () => jump(c[0], true)
+        })),
         onPlay: () => { if (this.audio) this.audio.pause(); setVs(v.id, { p: true }); },
         onPause: () => setVs(v.id, { p: false }),
         onEnd: (e) => { try { e.target.currentTime = 0; } catch (x) {} setVs(v.id, { p: false, t: 0 }); },
         toggle: () => { const el = getV(v.id); if (!el) return; if (el.paused) { const p = el.play(); if (p && p.catch) p.catch(() => {}); } else el.pause(); },
-        back: () => { const el = getV(v.id); jump((el ? el.currentTime : t) - 10); },
-        fwd: () => { const el = getV(v.id); jump((el ? el.currentTime : t) + 10); },
-        seek: (e) => jump(Number(e.target.value)),
         read: (e) => { if (e && e.preventDefault) e.preventDefault(); this.setState({ reader: v.art }); },
         copy: () => this.copyLink(link),
         share: () => {
