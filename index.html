@@ -556,46 +556,15 @@ Escuchar una columna
 
 <div style="flex: 0 1 330px; width: 100%; max-width: 330px; padding: 10px; border-radius: 44px; background: linear-gradient(160deg, #3A3A44 0%, #111115 55%, #26262D 100%); border: 1px solid rgba(255,255,255,0.18); box-shadow: 0 0 0 2px #000, 0 30px 80px rgba(0,0,0,0.65), 0 0 90px rgba(43,227,122,0.22)">
 <div style="position: relative; width: 100%; aspect-ratio: 9 / 16; border-radius: 34px; overflow: hidden; background: #0E0E12">
-<video id="{{v.domId}}" src="{{v.src}}" poster="{{v.poster}}" playsinline preload="metadata" aria-label="{{v.title}}" onPlay="{{v.onPlay}}" onPause="{{v.onPause}}" onEnded="{{v.onEnd}}" style="width: 100%; height: 100%; object-fit: cover; display: block"></video>
-<button onClick="{{v.toggle}}" aria-label="Reproducir o pausar el vídeo" style="position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer">
-<sc-if value="{{v.paused}}" hint-placeholder-val="{{ true }}">
-<span style="width: 84px; height: 84px; border-radius: 50%; background: rgba(255,255,255,0.18); border: 1.5px solid rgba(255,255,255,0.7); color: #FFFFFF; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px)"><svg width="34" height="34" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="margin-left: 4px"><path d="M8 5v14l11-7z"></path></svg></span>
-</sc-if>
-</button>
-<div style="position: absolute; left: 14px; right: 14px; top: 14px; display: flex; gap: 4px; pointer-events: none">
-<sc-for list="{{v.segs}}" as="g" hint-placeholder-count="3">
-<div style="flex: {{g.len}} 1 0; height: 3px; border-radius: 2px; background: rgba(255,255,255,0.32); overflow: hidden"><div style="width: {{g.w}}%; height: 100%; background: #FFFFFF"></div></div>
-</sc-for>
-</div>
+<video id="{{v.domId}}" src="{{v.src}}" poster="{{v.poster}}" controls controlsList="nodownload" playsinline preload="metadata" aria-label="{{v.title}}" onPlay="{{v.onPlay}}" onPause="{{v.onPause}}" onEnded="{{v.onEnd}}" style="width: 100%; height: 100%; object-fit: cover; display: block"></video>
 </div>
 </div>
 
-<div style="flex: 1 1 360px; min-width: 0; display: flex; flex-direction: column; gap: 22px">
+<div style="flex: 1 1 320px; max-width: 460px; min-width: 0; display: flex; flex-direction: column; gap: 24px">
 <div style="display: flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #B3B3BD">
 <span style="padding: 5px 12px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.35); color: #FFFFFF">{{v.chip}}</span><span>Jorge Sousa</span>
 </div>
-<div style="display: flex; align-items: center; gap: 22px">
-<button onClick="{{v.toggle}}" aria-label="{{v.toggleLabel}}" style="flex: none; width: 92px; height: 92px; padding: 0; border: 0; border-radius: 50%; background: conic-gradient(#2BE37A {{v.pct}}%, rgba(255,255,255,0.16) 0); display: flex; align-items: center; justify-content: center; cursor: pointer">
-<span style="width: 80px; height: 80px; border-radius: 50%; background: #0A0A0C; color: #FFFFFF; display: flex; align-items: center; justify-content: center">
-<sc-if value="{{v.paused}}" hint-placeholder-val="{{ true }}"><svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="margin-left: 3px"><path d="M8 5v14l11-7z"></path></svg></sc-if>
-<sc-if value="{{v.playing}}" hint-placeholder-val="{{ false }}"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"></rect><rect x="14" y="5" width="4" height="14" rx="1"></rect></svg></sc-if>
-</span>
-</button>
-<div style="display: flex; flex-direction: column; min-width: 0">
-<span style="font-size: clamp(56px, 8vw, 104px); line-height: 0.95; font-weight: 800; letter-spacing: -0.04em; font-variant-numeric: tabular-nums">{{v.left}}</span>
-<span style="font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #B3B3BD">restantes</span>
-</div>
-</div>
-<h3 style="margin: 0; font-family: 'Newsreader', serif; font-size: clamp(26px, 3.2vw, 38px); line-height: 1.1; font-weight: 600; letter-spacing: -0.01em">{{v.title}}</h3>
-<div role="list" aria-label="Capítulos del vídeo" style="display: flex; flex-direction: column; border-top: 1px solid rgba(255,255,255,0.14)">
-<sc-for list="{{v.chaps}}" as="c" hint-placeholder-count="4">
-<button role="listitem" onClick="{{c.go}}" style="display: flex; align-items: center; gap: 14px; min-height: 46px; padding: 8px 12px 8px 10px; border: 0; border-bottom: 1px solid rgba(255,255,255,0.14); border-left: 3px solid {{c.bar}}; background: {{c.bg}}; color: {{c.fg}}; text-align: left; font-size: 16px; font-weight: 600; cursor: pointer">
-<span style="flex: none; width: 26px; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; opacity: 0.7; font-variant-numeric: tabular-nums">{{c.n}}</span>
-<span style="flex: 1; min-width: 0">{{c.label}}</span>
-<span style="flex: none; font-size: 13px; opacity: 0.75; font-variant-numeric: tabular-nums">{{c.time}}</span>
-</button>
-</sc-for>
-</div>
+<h3 style="margin: 0; font-family: 'Newsreader', serif; font-size: clamp(30px, 3.8vw, 46px); line-height: 1.08; font-weight: 600; letter-spacing: -0.01em">{{v.title}}</h3>
 <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px">
 <button onClick="{{v.read}}" class="btn" style="display: inline-flex; align-items: center; gap: 8px; min-height: 46px; padding: 0 20px; border: 2px solid #2BE37A; border-radius: 999px; background: #2BE37A; color: #0E0E12; font-size: 15px; font-weight: 700">Leer el artículo completo<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"></path></svg></button>
 <button onClick="{{v.share}}" class="btn" style="display: inline-flex; align-items: center; min-height: 46px; padding: 0 18px; border: 2px solid rgba(255,255,255,0.45); border-radius: 999px; background: transparent; color: #FFFFFF; font-size: 15px; font-weight: 600">Compartir</button>
