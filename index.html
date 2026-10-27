@@ -452,31 +452,13 @@ Escuchar una columna
 <!-- Carrusel circular -->
 <div style="flex: 1 1 340px; min-width: 0; display: flex; justify-content: center">
 <div style="width: 100%; max-width: 460px; display: flex; flex-direction: column; gap: 14px">
-<div role="group" aria-roledescription="carrusel" aria-label="Trabajos destacados" onPointerDown="{{swipeStart}}" onPointerUp="{{swipeEnd}}" style="position: relative; width: 100%; height: 410px; overflow: hidden; touch-action: pan-y; user-select: none">
-<sc-for list="{{heroCards}}" as="h" hint-placeholder-count="3">
-<div class="hc {{h.cv}}" aria-hidden="{{h.hid}}" style="position: absolute; left: 11%; right: 11%; top: 0; height: 390px; opacity: {{h.op}}; transform: {{h.tf}}; transform-origin: top center; z-index: {{h.z}}; pointer-events: {{h.pe}}; color: #FFFFFF; border: 2px solid var(--line); border-radius: 24px; padding: 24px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 8px 8px 0 {{h.sh}}">
-<span style="font-size: 13px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase">{{h.label}}</span>
-<div style="display: flex; align-items: center; gap: 16px">
-<sc-if value="{{h.showPlay}}" hint-placeholder-val="{{ false }}">
-<a href="#escucha" tabindex="{{h.tab}}" onClick="{{playHero}}" class="btn" aria-label="Escuchar la columna" style="flex: none; position: relative; z-index: 2; width: 56px; height: 56px; border-radius: 50%; background: var(--g); color: var(--k); border: 2px solid var(--line); display: flex; align-items: center; justify-content: center">
-<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
-</a>
-</sc-if>
-<a href="{{h.href}}" tabindex="{{h.tab}}" target="{{h.target}}" rel="noopener noreferrer" onClick="{{h.open}}" class="stretch" style="font-family: 'Newsreader', serif; font-size: 26px; line-height: 1.15; font-weight: 600">{{h.title}}</a>
-</div>
-</div>
-</sc-for>
-</div>
-<div aria-hidden="true" style="display: flex; justify-content: center; gap: 10px">
-<sc-for list="{{dots}}" as="d" hint-placeholder-count="3">
-<span style="width: 10px; height: 10px; border-radius: 50%; background: {{d.c}}; display: inline-block"></span>
-</sc-for>
-</div>
+<div id="dlc" role="group" aria-roledescription="carrusel" aria-label="Trabajos destacados" tabindex="0" style="position: relative; width: 100%; height: 420px; overflow: hidden; touch-action: pan-y; user-select: none; perspective: 1100px"><div id="dlc-stage" style="position:absolute;inset:0;transform-style:preserve-3d"></div></div>
+<div id="dlc-dots" aria-hidden="true" style="display: flex; justify-content: center; gap: 10px"></div>
 <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px">
 <span style="font-size: 14px; font-weight: 600; color: var(--mute)">Desliza para ver más</span>
 <div style="display: flex; align-items: center; gap: 10px">
-<button onClick="{{carPrev}}" aria-label="Anterior" style="width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--line); background: transparent; color: var(--ink); display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg></button>
-<button onClick="{{carNext}}" aria-label="Siguiente" style="width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--line); background: var(--g); color: var(--k); display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+<button id="dlc-prev" type="button" aria-label="Anterior" style="width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--line); background: transparent; color: var(--ink); display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg></button>
+<button id="dlc-next" type="button" aria-label="Siguiente" style="width: 44px; height: 44px; border-radius: 50%; border: 2px solid var(--line); background: var(--g); color: var(--k); display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
 </div>
 </div>
 </div>
@@ -1883,6 +1865,193 @@ class Component extends DCLogic {
   window.addEventListener('hashchange', function () { if (!openState) fromHash(); });
 })();
 
+</script>
+<script id="dlc-script">
+(function () {
+  'use strict';
+
+  /* Carrusel circular infinito de la portada */
+  var CARDS = [
+    { cv: 'cv-lula', label: 'Artículo', title: 'Lula vence a Bolsonaro y logra su cuarto mandato presidencial', hash: 'lula' },
+    { cv: 'cv-milei', label: 'Artículo', title: 'La visita de Milei a España incomoda a la derecha', hash: 'milei' },
+    { cv: 'cv-nietos', label: 'Artículo', title: 'El TC rechaza restituir el voto a 160.000 nacionalizados por la Ley de Nietos', hash: 'nietos' },
+    { cv: 'cv-coruna', label: 'Artículo', title: 'Cargas policiales tras un acto de Vox en A Coruña', hash: 'coruna' },
+    { cv: 'cv-frente', label: 'Artículo', title: 'Rufián cuestiona la estrategia electoral del Frente Amplio tras las declaraciones de Emilio Delgado sobre el PSOE', hash: 'frente' },
+    { cv: 'cv-articulo', label: 'Artículo', title: 'Las inundaciones en el Levante y Baleares dejan cuatro fallecidos y obligan a mantener el confinamiento en ocho municipios', hash: 'articulo' },
+    { cv: 'cv-columna', label: 'Columna · Audio 5:29', title: '¿Han tocado techo las movilizaciones por el derecho a la vivienda?', hash: 'columna', play: true },
+    { cv: 'cv-video', label: 'Vídeo · Ver en YouTube', title: 'Entrevista a Amanda Romero, concejala de Más Madrid', url: 'https://youtu.be/PKv5h-Y0kOI' }
+  ];
+  var N = CARDS.length, TAU = Math.PI * 2;
+  var pos = 0, vel = 0, target = 0, raf = null, drag = null, lastDrag = 0, shown = -1;
+  var els = [], dotEls = [];
+
+  var CSS = [
+    '#dlc{cursor:grab}',
+    '#dlc.dragging{cursor:grabbing}',
+    '#dlc:focus-visible{outline:3px solid #2BE37A;outline-offset:4px;border-radius:24px}',
+    '.dlc-card{position:absolute;left:16%;width:68%;top:34px;height:366px;box-sizing:border-box;padding:22px;display:flex;flex-direction:column;justify-content:space-between;color:#fff;border:2px solid var(--line,#F4F4EE);border-radius:24px;transform-origin:50% 50%;will-change:transform,opacity;backface-visibility:hidden;-webkit-user-drag:none}',
+    '.dlc-card .lb{font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase}',
+    '.dlc-card .row{display:flex;align-items:center;gap:14px}',
+    '.dlc-card .tt{font-family:"Newsreader",serif;font-size:clamp(20px,5.6vw,25px);line-height:1.16;font-weight:600;color:inherit;text-decoration:none;display:-webkit-box;-webkit-line-clamp:8;-webkit-box-orient:vertical;overflow:hidden}',
+    '.dlc-card .tt::after{content:"";position:absolute;top:0;right:0;bottom:0;left:0}',
+    '.dlc-card .pl{flex:none;position:relative;z-index:2;width:52px;height:52px;border-radius:50%;background:var(--g,#2BE37A);color:var(--k,#0A0A0A);border:2px solid var(--line,#F4F4EE);display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0}',
+    '.dlc-dot{width:10px;height:10px;border-radius:50%;background:#5A5A5A;display:inline-block;transition:background .2s,transform .2s}',
+    '.dlc-dot.on{background:#FFFFFF;transform:scale(1.25)}'
+  ].join('\n');
+
+  function ensureCss() {
+    if (document.getElementById('dlc-css')) return;
+    var st = document.createElement('style'); st.id = 'dlc-css'; st.textContent = CSS; document.head.appendChild(st);
+  }
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+
+  function build(stage) {
+    ensureCss();
+    var h = '';
+    CARDS.forEach(function (c, i) {
+      h += '<div class="dlc-card ' + c.cv + '" data-i="' + i + '">' +
+        '<span class="lb">' + esc(c.label) + '</span>' +
+        '<div class="row">' +
+        (c.play ? '<button type="button" class="pl" data-play aria-label="Escuchar la columna"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg></button>' : '') +
+        '<a class="tt" ' + (c.url ? 'href="' + esc(c.url) + '" target="_blank" rel="noopener noreferrer"' : 'href="#' + c.hash + '"') + ' draggable="false">' + esc(c.title) + '</a>' +
+        '</div></div>';
+    });
+    stage.innerHTML = h;
+    els = [].slice.call(stage.querySelectorAll('.dlc-card'));
+    layout(true);
+  }
+  function buildDots(box) {
+    var h = ''; for (var i = 0; i < N; i++) h += '<span class="dlc-dot"></span>';
+    box.innerHTML = h; dotEls = [].slice.call(box.querySelectorAll('.dlc-dot')); shown = -1;
+  }
+
+  function frontIndex() { return ((Math.round(pos) % N) + N) % N; }
+
+  function layout(force) {
+    var host = document.getElementById('dlc'); if (!host || !els.length) return;
+    var w = host.clientWidth || 460, R = w * 0.48;
+    for (var i = 0; i < N; i++) {
+      var el = els[i]; if (!el) continue;
+      var d = (((i - pos) % N) + N) % N; if (d > N / 2) d -= N;
+      var th = d * TAU / N, s = Math.sin(th), c = Math.cos(th), t = (1 + c) / 2;
+      var x = R * s, y = -(1 - c) * 24, z = -(1 - c) * 90;
+      var sc = 0.5 + 0.5 * Math.pow(t, 2.2), ry = -s * 34;
+      var op = t < 0.06 ? 0 : Math.min(1, 0.18 + 0.82 * Math.pow(t, 1.25));
+      el.style.transform = 'translate3d(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px,' + z.toFixed(1) + 'px) rotateY(' + ry.toFixed(1) + 'deg) scale(' + sc.toFixed(3) + ')';
+      el.style.opacity = op.toFixed(3);
+      el.style.zIndex = String(Math.round(t * 100));
+      el.style.filter = 'brightness(' + (0.5 + 0.5 * t).toFixed(2) + ')';
+      el.style.boxShadow = t > 0.985 ? '8px 8px 0 var(--g,#2BE37A)' : '0 0 0 transparent';
+      el.style.pointerEvents = t > 0.55 ? 'auto' : 'none';
+      var front = t > 0.985;
+      el.setAttribute('aria-hidden', front ? 'false' : 'true');
+      var tt = el.querySelector('.tt'); if (tt) tt.tabIndex = front ? 0 : -1;
+      var pl = el.querySelector('.pl'); if (pl) pl.tabIndex = front ? 0 : -1;
+    }
+    var f = frontIndex();
+    if (f !== shown || force) { shown = f; dotEls.forEach(function (dt, k) { dt.classList.toggle('on', k === f); }); }
+  }
+
+  function stopAnim() { if (raf) { cancelAnimationFrame(raf); raf = null; } }
+  function animate() {
+    stopAnim();
+    var last = performance.now();
+    function step(now) {
+      var dt = Math.min(0.033, (now - last) / 1000); last = now;
+      var f = (target - pos) * 95 - vel * 14.5;
+      vel += f * dt; pos += vel * dt;
+      layout();
+      if (Math.abs(target - pos) < 0.0006 && Math.abs(vel) < 0.01) { pos = target; vel = 0; layout(); raf = null; return; }
+      raf = requestAnimationFrame(step);
+    }
+    raf = requestAnimationFrame(step);
+  }
+  function goTo(t, v0) { target = t; if (typeof v0 === 'number') vel = v0; animate(); }
+
+  function pxPerItem() { var host = document.getElementById('dlc'); var w = host ? host.clientWidth : 460; return Math.max(90, w * 0.48 * TAU / N); }
+
+  document.addEventListener('pointerdown', function (e) {
+    var host = e.target && e.target.closest ? e.target.closest('#dlc') : null;
+    if (!host) return;
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    if (e.target.closest && e.target.closest('[data-play]')) return;
+    stopAnim(); vel = 0;
+    drag = { id: e.pointerId, x: e.clientX, y: e.clientY, pos0: pos, moved: false, v: 0, lx: e.clientX, lt: performance.now(), host: host };
+  }, true);
+  document.addEventListener('pointermove', function (e) {
+    if (!drag || e.pointerId !== drag.id) return;
+    var dx = e.clientX - drag.x;
+    if (!drag.moved) {
+      if (Math.abs(dx) < 6) return;
+      drag.moved = true; drag.host.classList.add('dragging');
+      try { drag.host.setPointerCapture(e.pointerId); } catch (x) {}
+    }
+    var now = performance.now(), dt = Math.max(1, now - drag.lt);
+    var inst = -((e.clientX - drag.lx) / pxPerItem()) / (dt / 1000);
+    drag.v = drag.v * 0.7 + inst * 0.3; drag.lx = e.clientX; drag.lt = now;
+    pos = drag.pos0 - dx / pxPerItem();
+    layout();
+  });
+  function endDrag(e) {
+    if (!drag || (e && e.pointerId !== drag.id)) return;
+    var d = drag; drag = null; d.host.classList.remove('dragging');
+    try { d.host.releasePointerCapture(d.id); } catch (x) {}
+    if (!d.moved) return;
+    lastDrag = performance.now();
+    var v = Math.max(-9, Math.min(9, d.v));
+    if (performance.now() - d.lt > 120) v = 0;
+    var t = Math.round(pos + v * 0.32);
+    t = Math.max(Math.round(pos) - 3, Math.min(Math.round(pos) + 3, t));
+    goTo(t, v);
+  }
+  document.addEventListener('pointerup', endDrag);
+  document.addEventListener('pointercancel', endDrag);
+
+  document.addEventListener('click', function (e) {
+    var t = e.target; if (!t || !t.closest) return;
+    if (performance.now() - lastDrag < 350 && t.closest('#dlc')) { e.preventDefault(); e.stopPropagation(); return; }
+    if (t.closest('#dlc-prev')) { e.preventDefault(); goTo(Math.round(target) - 1); return; }
+    if (t.closest('#dlc-next')) { e.preventDefault(); goTo(Math.round(target) + 1); return; }
+    var pl = t.closest('#dlc [data-play]');
+    if (pl) {
+      e.preventDefault();
+      var sec = document.getElementById('escucha'); if (sec && sec.scrollIntoView) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      var btn = document.querySelector('#escucha button[aria-label="Reproducir"]'); if (btn) btn.click();
+      return;
+    }
+    var card = t.closest('#dlc .dlc-card');
+    if (!card) return;
+    var i = parseInt(card.getAttribute('data-i'), 10), f = frontIndex();
+    if (i !== f) {
+      e.preventDefault();
+      var diff = ((i - f) % N + N) % N; if (diff > N / 2) diff -= N;
+      goTo(Math.round(pos) + diff);
+      return;
+    }
+    var c = CARDS[i];
+    if (c.hash) {
+      e.preventDefault();
+      try { history.replaceState(null, '', location.href.split('#')[0] + '#'); } catch (x) {}
+      location.hash = c.hash;
+    }
+  }, true);
+
+  document.addEventListener('keydown', function (e) {
+    if (document.activeElement && document.activeElement.id === 'dlc') {
+      if (e.key === 'ArrowRight') { e.preventDefault(); goTo(Math.round(target) + 1); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); goTo(Math.round(target) - 1); }
+    }
+  });
+  window.addEventListener('resize', function () { layout(); });
+
+  function tick() {
+    var stage = document.getElementById('dlc-stage');
+    if (stage && (!stage.firstChild || !els.length || !stage.contains(els[0]))) build(stage);
+    var box = document.getElementById('dlc-dots');
+    if (box && (!box.firstChild || !dotEls.length || !box.contains(dotEls[0]))) { buildDots(box); layout(true); }
+  }
+  setInterval(tick, 300); tick();
+})();
 </script>
 </body>
 </html>
