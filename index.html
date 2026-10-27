@@ -697,7 +697,7 @@ Descargar CV
 <div style="display: flex; flex-wrap: wrap; gap: 12px">
 <a href="https://www.linkedin.com/in/jorge-sousa-015b0a445?utm_source=share_via&amp;utm_content=profile&amp;utm_medium=member_android" target="_blank" rel="noopener noreferrer" class="btn" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 24px; background: #0E0E12; color: #FBFBF8; border-radius: 999px; font-size: 16px; font-weight: 600">LinkedIn</a>
 <a href="https://x.com/Jjorge_Sousa" target="_blank" rel="noopener noreferrer" class="btn" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 24px; background: #0E0E12; color: #FBFBF8; border-radius: 999px; font-size: 16px; font-weight: 600">X</a>
-<a href="https://www.instagram.com/jjorge.sou?mdxt=MzI3bmZsa3JhZXBj" target="_blank" rel="noopener noreferrer" class="btn" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 24px; background: #0E0E12; color: #FBFBF8; border-radius: 999px; font-size: 16px; font-weight: 600">Instagram</a>
+<a href="https://www.instagram.com/deletras._/" target="_blank" rel="noopener noreferrer" class="btn" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 24px; background: #0E0E12; color: #FBFBF8; border-radius: 999px; font-size: 16px; font-weight: 600">Instagram</a>
 <a href="https://open.spotify.com/show/2Edh3ssTY6kaCfvbelbAWb?si=HBNtHU9oSvuo8FKIr3ryfQ" target="_blank" rel="noopener noreferrer" class="btn" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 24px; background: #0E0E12; color: #FBFBF8; border-radius: 999px; font-size: 16px; font-weight: 600">Spotify</a>
 </div>
 </div>
@@ -780,7 +780,7 @@ Volver al portfolio
 <span>© 2026 DeLetras · Jorge Sousa, periodista</span>
 <nav aria-label="Redes y contacto" style="display: flex; flex-wrap: wrap; gap: 4px 20px; font-weight: 600">
 <a href="mailto:jjorgeperiodista@gmail.com" style="display: inline-flex; align-items: center; min-height: 44px; color: #FBFBF8">Correo</a>
-<a href="https://www.instagram.com/jjorge.sou?mdxt=MzI3bmZsa3JhZXBj" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; min-height: 44px; color: #FBFBF8">Instagram</a>
+<a href="https://www.instagram.com/deletras._/" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; min-height: 44px; color: #FBFBF8">Instagram</a>
 <a href="https://www.linkedin.com/in/jorge-sousa-015b0a445?utm_source=share_via&amp;utm_content=profile&amp;utm_medium=member_android" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; min-height: 44px; color: #FBFBF8">LinkedIn</a>
 <a href="https://x.com/Jjorge_Sousa" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; min-height: 44px; color: #FBFBF8">X</a>
 <a href="https://open.spotify.com/show/2Edh3ssTY6kaCfvbelbAWb?si=HBNtHU9oSvuo8FKIr3ryfQ" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; min-height: 44px; color: #FBFBF8">Spotify</a>
@@ -1369,7 +1369,7 @@ class Component extends DCLogic {
       pinned: '¿Te ha quedado alguna duda sobre la Ley de Nietos? Pregúntame aquí 👇'
     }
   ];
-  var IG = 'https://www.instagram.com/jjorge.sou/';
+  var IG = 'https://www.instagram.com/deletras._/';
 
   /* ---------- Almacenamiento (con alternativa en memoria) ---------- */
   var LS = null, mem = {};
@@ -1758,7 +1758,7 @@ class Component extends DCLogic {
       h += '<div class="dlp-c"><span class="a">' + esc((c.n || 'A').charAt(0).toUpperCase()) + '</span><div class="b"><div class="n">' + esc(c.n || 'Anónimo') + ' <em>' + ago(c.t) + '</em></div><div class="x">' + esc(c.x) + '</div></div></div>';
     });
     h += '</div><form class="dlp-form" autocomplete="off"><div class="r"><input class="nm" name="n" maxlength="24" placeholder="Tu nombre" value="' + esc(me) + '" aria-label="Tu nombre"><input class="tx" name="x" maxlength="280" placeholder="Añade un comentario…" aria-label="Comentario"><button type="submit" aria-label="Publicar comentario">' + IC.send + '</button></div>' +
-      '<small>Tus comentarios se guardan en este navegador. Para charlar con más gente, sigue en <a href="' + IG + '" target="_blank" rel="noopener">Instagram @jjorge.sou</a>.</small></form>';
+      '<small>Tus comentarios se guardan en este navegador. Para charlar con más gente, sigue en <a href="' + IG + '" target="_blank" rel="noopener">Instagram @deletras._</a>.</small></form>';
     sheetEl.innerHTML = h;
     sheetEl.querySelector('[data-x]').addEventListener('click', closeSheets);
     var form = sheetEl.querySelector('form');
