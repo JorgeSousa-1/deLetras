@@ -528,6 +528,11 @@ Escuchar una columna
 </div>
 </sc-for>
 </div>
+<sc-if value="{{hasMore}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; justify-content: center">
+<button onClick="{{toggleMore}}" class="btn" style="display: inline-flex; align-items: center; gap: 10px; min-height: 52px; padding: 0 28px; border: 2px solid #0E0E12; border-radius: 999px; background: #FFFFFF; color: #0E0E12; font-size: 17px; font-weight: 600">{{moreLabel}}<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="transform: {{moreChev}}; transition: transform .25s"><path d="M6 9l6 6 6-6"></path></svg></button>
+</div>
+</sc-if>
 </section>
 
 <!-- DELETRAS PLAY -->
@@ -778,7 +783,7 @@ Volver al portfolio
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props='{"bg":{"editor":"color","default":"#EEEEF0","options":["#EEEEF0","#F7F1E5","#E4E7FF","#D9F2E3","#FBFBF8"]},"accent":{"editor":"color","default":"#2B50FF","options":["#2B50FF","#FF5A47","#12A150","#7A3CFF"]},"green":{"editor":"color","default":"#2BE37A","options":["#2BE37A","#B6FF3B","#00D1B2","#12A150"]},"red":{"editor":"color","default":"#FF4D4D","options":["#FF4D4D","#FF6B3D","#FF3B7F","#E63946"]},"$preview":{"width":1360,"height":4100}}'>
 class Component extends DCLogic {
-  state = { ig: null, msg: '', hero: 0, filter: 'all', col: 0, playing: false, t: 0, reader: null, vs: {} };
+  state = { ig: null, msg: '', hero: 0, filter: 'all', col: 0, more: false, playing: false, t: 0, reader: null, vs: {} };
 
   DUR = 329;
 
@@ -1152,7 +1157,7 @@ class Component extends DCLogic {
       { id: 'columna', cover: 'columna', type: 'Columna', title: docs.columna.title, medium: 'Por Jorge Sousa', meta: '19 oct 2026 · 3 min de lectura', audio: true, audioLabel: 'Audio 5:29' },
       { cover: 'video', type: 'Multimedia', title: 'Entrevista a Amanda Romero, concejala de Más Madrid', medium: 'Entrevista en vídeo', meta: 'Ver en YouTube', url: 'https://youtu.be/PKv5h-Y0kOI', audio: false }
     ];
-    const cards = all
+    const allCards = all
       .filter((c) => s.filter === 'all' || c.type === s.filter)
       .map((c) => ({
         ...c,
@@ -1176,6 +1181,13 @@ class Component extends DCLogic {
           if (c.id) this.setState({ reader: c.id });
         }
       }));
+
+    const LIM = 4;
+    const cards = s.more ? allCards : allCards.slice(0, LIM);
+    const hasMore = allCards.length > LIM;
+    const moreLabel = s.more ? 'Ver menos' : 'Ver los ' + (allCards.length - LIM) + ' trabajos restantes';
+    const toggleMore = () => this.setState({ more: !s.more });
+    const moreChev = s.more ? 'rotate(180deg)' : 'rotate(0deg)';
 
     const colTitles = [docs.columna.title];
     const cols = colTitles.map((title, i) => ({
@@ -1342,6 +1354,10 @@ class Component extends DCLogic {
       },
       tabs,
       cards,
+      hasMore,
+      moreLabel,
+      toggleMore,
+      moreChev,
       cols,
       bars,
       curTitle: colTitles[s.col],
