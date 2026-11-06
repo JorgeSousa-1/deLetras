@@ -429,6 +429,7 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid #2B50
 <a href="#escucha" style="padding: 12px 0">Escucha</a>
 <a href="#multimedia" style="padding: 12px 0">Multimedia</a>
 <a href="#sobre-mi" style="padding: 12px 0">Sobre mí</a>
+<a href="#app" style="padding: 12px 0">App</a>
 <a href="media/CV_Jorge_Sousa.pdf" target="_blank" rel="noopener" style="padding: 12px 0">CV</a>
 <div style="display: flex; flex-direction: column; align-items: center; gap: 4px">
 <a href="#contacto" class="btn" style="padding: 12px 22px; background: var(--g); color: var(--k); border-radius: 999px">Contacto</a>
@@ -699,6 +700,40 @@ Leer la columna
 Descargar CV
 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v12M6 11l6 6 6-6M5 20h14"></path></svg>
 </a>
+</div>
+</div>
+</section>
+
+<!-- APP -->
+<section id="app" style="background: #0A0A0A; color: #FBFBF8; border-top: 2px solid #0E0E12">
+<div style="max-width: 1240px; margin: 0 auto; padding: 80px clamp(16px, 4vw, 40px); display: flex; flex-wrap: wrap; gap: 40px 56px; align-items: center">
+<div style="flex: 1 1 380px; display: flex; flex-direction: column; gap: 22px; min-width: 0">
+<span style="font-size: 14px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #2BE37A">App · Gratis</span>
+<h2 style="margin: 0; font-size: clamp(38px, 7vw, 76px); line-height: 0.98; font-weight: 800; letter-spacing: -0.035em">Llévate DeLetras<br>en el móvil.</h2>
+<p style="margin: 0; font-size: 18px; line-height: 1.5; color: #C9CAD6; max-width: 520px">Instálala en tu pantalla de inicio y ábrela como una app: sin tiendas, sin descargas pesadas y con los artículos disponibles aunque no tengas conexión.</p>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px">
+<button type="button" id="pwa-install-btn" class="btn" style="min-height: 54px; padding: 0 28px; background: #2BE37A; color: #0A0A0A; border: 0; border-radius: 999px; font-family: inherit; font-size: 18px; font-weight: 700; cursor: pointer">Instalar app</button>
+<span id="pwa-status" role="status" style="font-size: 15px; font-weight: 600; color: #2BE37A"></span>
+</div>
+<p id="pwa-inapp" hidden style="margin: 0; padding: 12px 16px; border: 2px solid #FF4D4D; border-radius: 14px; font-size: 15px; line-height: 1.45; color: #FBFBF8">Parece que has abierto la web desde dentro de otra app (Instagram, TikTok…). Desde ahí no se puede instalar. Toca los tres puntos y elige <b>«Abrir en el navegador»</b>, o copia el enlace y ábrelo en Chrome o Safari.</p>
+</div>
+<div style="flex: 1 1 340px; display: flex; flex-direction: column; gap: 14px; min-width: 0">
+<div id="pwa-android" style="border: 2px solid #2A2A33; border-radius: 22px; padding: 22px 24px; display: flex; flex-direction: column; gap: 10px">
+<b style="font-size: 20px">Android · Chrome</b>
+<ol style="margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; font-size: 16px; line-height: 1.45; color: #C9CAD6">
+<li>Pulsa <b style="color:#FBFBF8">Instalar app</b>. Si no sale la ventana, toca los tres puntos ⋮ de Chrome.</li>
+<li>Elige <b style="color:#FBFBF8">«Instalar aplicación»</b> o «Añadir a la pantalla de inicio».</li>
+<li>Confirma y busca el icono verde de DeLetras.</li>
+</ol>
+</div>
+<div id="pwa-ios" style="border: 2px solid #2A2A33; border-radius: 22px; padding: 22px 24px; display: flex; flex-direction: column; gap: 10px">
+<b style="font-size: 20px">iPhone · Safari</b>
+<ol style="margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; font-size: 16px; line-height: 1.45; color: #C9CAD6">
+<li>Abre esta web en <b style="color:#FBFBF8">Safari</b> (no vale Chrome ni el navegador de Instagram).</li>
+<li>Toca el botón <b style="color:#FBFBF8">Compartir</b>, el cuadrado con la flecha hacia arriba.</li>
+<li>Baja y elige <b style="color:#FBFBF8">«Añadir a pantalla de inicio»</b>.</li>
+</ol>
+</div>
 </div>
 </div>
 </section>
@@ -2356,6 +2391,25 @@ class Component extends DCLogic {
     window.addEventListener('load', function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); });
   }
   var standalone = (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true;
+
+  function wire(){
+    var btn=document.getElementById('pwa-install-btn'); if(!btn) return;
+    var st=document.getElementById('pwa-status'), inapp=document.getElementById('pwa-inapp');
+    var A=document.getElementById('pwa-android'), I=document.getElementById('pwa-ios');
+    var ua2=navigator.userAgent||'';
+    var isIos=/iphone|ipad|ipod/i.test(ua2) || (/Macintosh/.test(ua2) && navigator.maxTouchPoints>1);
+    var inApp=/instagram|fban|fbav|tiktok|musical_ly|line\/|twitter|linkedinapp/i.test(ua2);
+    if (inApp && inapp) inapp.hidden=false;
+    if (A&&I){ var me=isIos?I:A; me.style.borderColor='#2BE37A'; }
+    if (standalone){ btn.style.display='none'; st.textContent='✓ Ya estás usando la app instalada'; return; }
+    btn.addEventListener('click', function(){
+      if (install()) { st.textContent=''; return; }
+      st.textContent = isIos ? 'En iPhone sigue los pasos de iPhone · Safari.' : 'Tu navegador no ofrece la instalación automática: sigue los pasos de Android · Chrome.';
+      var box=isIos?I:A; if(box&&box.scrollIntoView) box.scrollIntoView({behavior:'smooth',block:'center'});
+    });
+  }
+  if (document.readyState==='loading') document.addEventListener('DOMContentLoaded',wire); else setTimeout(wire,0);
+  window.addEventListener('load', function(){ setTimeout(wire,300); });
   if (standalone) return;
   var KEY='dl-pwa-dismissed';
   function dismissed(){ try { return localStorage.getItem(KEY)==='1'; } catch(e){ return false; } }
@@ -2377,9 +2431,10 @@ class Component extends DCLogic {
     document.body.appendChild(d);
   }
   var deferred=null;
+  function install(){ if(!deferred) return false; deferred.prompt(); deferred.userChoice.finally(function(){ deferred=null; }); return true; }
   window.addEventListener('beforeinstallprompt', function(e){
     e.preventDefault(); deferred=e;
-    setTimeout(function(){ bar('Instala DeLetras en tu móvil', function(){ deferred.prompt(); deferred.userChoice.finally(function(){ deferred=null; }); }); }, 4000);
+    setTimeout(function(){ bar('Instala DeLetras en tu móvil', install); }, 4000);
   });
   window.addEventListener('appinstalled', function(){ var b=document.querySelector('.pwa-bar'); if(b) b.remove(); });
   var ua=navigator.userAgent||'';
