@@ -2385,6 +2385,45 @@ class Component extends DCLogic {
   autoStart();
 })();
 </script>
+<script id="back-script">
+/* Botón «atrás» del móvil: primero cierra lo que esté abierto y vuelve al inicio; solo después sale de la web. */
+(function(){
+  var base=location.pathname+location.search;
+  var SEC=['inicio','articulos','play','escucha','multimedia','app','sobre-mi','contacto'];
+  function modal(){ return document.querySelector('[aria-modal="true"]'); }
+  function closeModal(){
+    try { document.dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',bubbles:true,cancelable:true})); } catch(e){}
+    setTimeout(function(){ var m=modal(); if(m){ var b=m.querySelector('[aria-label="Cerrar"]'); if(b) b.click(); } },80);
+  }
+  try {
+    history.replaceState({dlBase:1},'',location.href);
+    history.pushState({dlGuard:1},'',location.href);
+  } catch(e){ return; }
+  window.addEventListener('popstate',function(e){
+    var st=e.state, h=location.hash||'';
+    if(st && st.dlBase){
+      if(modal() || window.scrollY>150){
+        closeModal();
+        try { history.replaceState({dlBase:1},'',base); history.pushState({dlGuard:1},'',base); } catch(x){}
+        window.scrollTo({top:0,behavior:'smooth'});
+      } else {
+        history.back();            // ya estás arriba y sin nada abierto: sale de la web
+      }
+      return;
+    }
+    if(modal() && (h===''||h==='#')) closeModal();
+  });
+  document.addEventListener('click',function(e){
+    var a=e.target.closest && e.target.closest('a[href^="#"]'); if(!a) return;
+    var id=(a.getAttribute('href')||'').slice(1);
+    if(SEC.indexOf(id)<0) return;
+    var el=document.getElementById(id); if(!el) return;
+    e.preventDefault();
+    el.scrollIntoView({behavior:'smooth',block:'start'});
+    try { history.replaceState(history.state,'',base+'#'+id); } catch(x){}
+  });
+})();
+</script>
 <script id="pwa-script">
 (function(){
   if (location.protocol.indexOf('http')===0 && 'serviceWorker' in navigator) {
