@@ -471,11 +471,10 @@ Escuchar una columna
 </div>
 
 <!-- ARTÍCULOS -->
-<section id="articulos" style="max-width: 1240px; margin: 0 auto; padding: 88px clamp(16px, 4vw, 40px) 64px; display: flex; flex-direction: column; gap: 36px">
+<section id="articulos" style="max-width: 1240px; margin: 0 auto; padding: 88px clamp(16px, 4vw, 40px) 64px; display: flex; flex-direction: column; gap: 28px">
 <div style="display: flex; flex-direction: column; gap: 12px">
 <span style="font-size: 14px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #3A3A46">01 — Artículos</span>
-<h2 style="margin: 0; font-size: clamp(40px, 6vw, 72px); line-height: 1; font-weight: 800; letter-spacing: -0.03em">La <span style="background: #FF4D4D; color: #0A0A0A; padding: 0 .14em">hemeroteca</span></h2>
-<p style="margin: 0; max-width: 560px; font-size: 18px; line-height: 1.5; color: #3A3A46">Todo lo que he publicado, ordenado por fecha. Filtra por tema, pasa el ratón por un titular para ver su portada y ábrelo para leerlo.</p>
+<h2 style="margin: 0; font-size: clamp(40px, 6vw, 72px); line-height: 1; font-weight: 800; letter-spacing: -0.03em">La <span style="background: #FF4D4D; color: #0A0A0A; padding: 0 .14em">portada</span></h2>
 </div>
 <div id="dla-mount"></div>
 </section>
@@ -494,72 +493,56 @@ Escuchar una columna
     { id: 'frente', t: 'Política', d: '21 oct', m: 2, title: 'Rufián cuestiona la estrategia electoral del Frente Amplio tras las declaraciones de Emilio Delgado sobre el PSOE' },
     { id: 'articulo', t: 'Sociedad', d: '19 oct', m: 2, title: 'Las inundaciones en el Levante y Baleares dejan cuatro fallecidos y obligan a mantener el confinamiento en ocho municipios' }
   ];
-  var TOPICS = ['Todos'];
-  A.forEach(function (a) { if (TOPICS.indexOf(a.t) < 0) TOPICS.push(a.t); });
-  var filter = 'Todos', cur = 0;
   var CSS = [
-    '.dla{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:48px;align-items:start}',
-    '.dla-chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:22px}',
-    '.dla-chip{font:inherit;font-size:15px;font-weight:600;padding:10px 18px;border:2px solid #0E0E12;border-radius:999px;background:transparent;color:#0E0E12;cursor:pointer;min-height:44px}',
-    '.dla-chip[aria-pressed="true"]{background:#2BE37A}',
-    '.dla-list{list-style:none;margin:0;padding:0;border-top:2px solid #0E0E12}',
-    '.dla-row{display:grid;grid-template-columns:36px 1fr;gap:6px 14px;padding:20px 8px;border-bottom:2px solid #0E0E12;color:#0E0E12;text-decoration:none;position:relative;transition:background .18s,padding .18s}',
-    '.dla-row .n{font-size:15px;font-weight:700;color:#3A3A46;padding-top:6px;font-variant-numeric:tabular-nums}',
-    '.dla-row .tt{padding-right:34px;font-family:"Newsreader",Georgia,serif;font-size:clamp(21px,2.5vw,29px);line-height:1.15;font-weight:600;letter-spacing:-.01em}',
-    '.dla-row .mt{grid-column:2;display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#3A3A46}',
-    '.dla-row .tg{background:#0E0E12;color:#FBFBF8;padding:3px 10px;border-radius:999px}',
-    '.dla-row .ar{position:absolute;right:12px;top:18px;font-size:24px;font-weight:700;opacity:0;transform:translateX(-8px);transition:.18s}',
-    '.dla-row.on{background:#2BE37A;padding-left:20px}',
-    '.dla-row.on .n{color:#0E0E12}.dla-row.on .mt{color:#0E0E12}.dla-row.on .ar{opacity:1;transform:none}',
-    '.dla-row:focus-visible{outline:3px solid #0E0E12;outline-offset:-3px}',
-    '.dla-side{position:sticky;top:96px}',
-    '.dla-prev{position:relative;aspect-ratio:4/5;border:2px solid #0E0E12;border-radius:28px;box-shadow:10px 10px 0 #2BE37A;overflow:hidden;background:#0E0E12;color:#fff}',
-    '.dla-prev .lay{position:absolute;inset:0;background-size:cover;background-position:center 30%;opacity:0;transition:opacity .35s;display:flex;flex-direction:column;justify-content:space-between;padding:26px;box-sizing:border-box}',
-    '.dla-prev .lay.on{opacity:1}',
-    '.dla-prev .lb{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}',
-    '.dla-prev .ph{font-family:"Newsreader",Georgia,serif;font-size:clamp(24px,2.7vw,32px);line-height:1.14;font-weight:600;display:-webkit-box;-webkit-line-clamp:7;-webkit-box-orient:vertical;overflow:hidden}',
-    '.dla-prev .go{margin-top:16px;display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:15px;background:#2BE37A;color:#0A0A0A;padding:10px 18px;border-radius:999px;align-self:flex-start}',
-    '.dla-cnt{margin-top:22px;font-size:14px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#3A3A46}',
-    '@media (max-width:860px){.dla{grid-template-columns:1fr;gap:0}.dla-side{display:none}.dla-row .ar{opacity:1;transform:none}}',
-    '@media (prefers-reduced-motion:reduce){.dla-row,.dla-prev .lay{transition:none}}'
+    '.dla{border-top:6px solid #0E0E12;border-bottom:2px solid #0E0E12}',
+    '.dla-mast{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 24px;padding:12px 0;border-bottom:2px solid #0E0E12;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}',
+    '.dla-top{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:0}',
+    '.dla-a{display:flex;flex-direction:column;gap:12px;color:#0E0E12;text-decoration:none;padding:22px 24px;position:relative}',
+    '.dla-img{position:relative;overflow:hidden;border:2px solid #0E0E12;border-radius:14px;background:#0E0E12}',
+    '.dla-img i{position:absolute;inset:0;background-size:cover;background-position:center 30%;filter:brightness(1.55) saturate(1.1);transition:transform .5s}',
+    '.dla-a:hover .dla-img i,.dla-a:focus-visible .dla-img i{transform:scale(1.06)}',
+    '.dla-k{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#3A3A46}',
+    '.dla-k b{background:#FF4D4D;color:#0A0A0A;padding:3px 9px;border-radius:4px}',
+    '.dla-h{font-family:"Newsreader",Georgia,serif;font-weight:700;line-height:1.1;letter-spacing:-.01em;margin:0;background:linear-gradient(#2BE37A,#2BE37A) 0 92%/0 .42em no-repeat;transition:background-size .3s}',
+    '.dla-a:hover .dla-h,.dla-a:focus-visible .dla-h{background-size:100% .42em}',
+    '.dla-a:focus-visible{outline:3px solid #0E0E12;outline-offset:-3px}',
+    '.dla-lead{border-right:2px solid #0E0E12}',
+    '.dla-lead .dla-img{aspect-ratio:16/10}',
+    '.dla-lead .dla-h{font-size:clamp(32px,4.2vw,52px)}',
+    '.dla-side{display:flex;flex-direction:column}',
+    '.dla-side .dla-a{flex:1}',
+    '.dla-side .dla-a+.dla-a{border-top:2px solid #0E0E12}',
+    '.dla-side .dla-img{aspect-ratio:16/8}',
+    '.dla-side .dla-h{font-size:clamp(22px,2.4vw,28px)}',
+    '.dla-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:2px solid #0E0E12}',
+    '.dla-grid .dla-a{border-right:2px solid #0E0E12}',
+    '.dla-grid .dla-a:nth-child(3n){border-right:0}',
+    '.dla-grid .dla-a:nth-child(n+4){border-top:2px solid #0E0E12}',
+    '.dla-grid .dla-img{aspect-ratio:16/9}',
+    '.dla-grid .dla-h{font-size:clamp(20px,2vw,24px)}',
+    '@media (max-width:900px){.dla-top{grid-template-columns:1fr}.dla-lead{border-right:0;border-bottom:2px solid #0E0E12}.dla-grid{grid-template-columns:1fr 1fr}.dla-grid .dla-a:nth-child(3n){border-right:2px solid #0E0E12}.dla-grid .dla-a:nth-child(2n){border-right:0}.dla-grid .dla-a:nth-child(n+3){border-top:2px solid #0E0E12}.dla-grid .dla-a:nth-child(2){border-top:0}}',
+    '@media (max-width:560px){.dla-grid{grid-template-columns:1fr}.dla-grid .dla-a{border-right:0!important;border-top:2px solid #0E0E12!important}.dla-grid .dla-a:first-child{border-top:0!important}.dla-a{padding:18px 4px}}',
+    '@media (prefers-reduced-motion:reduce){.dla-img i,.dla-h{transition:none}}'
   ].join('\n');
   function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
-  function pad(n) { return n < 10 ? '0' + n : '' + n; }
-  function vis() { return A.filter(function (a) { return filter === 'Todos' || a.t === filter; }); }
+  function story(a, cls, first) {
+    return '<a class="dla-a ' + cls + '" href="#' + a.id + '" data-id="' + a.id + '"><div class="dla-img"><i class="cv-' + a.id + '"></i></div>' +
+      '<div class="dla-k">' + (first ? '<b>Lo último</b>' : '<b style="background:#0E0E12;color:#FBFBF8">' + esc(a.t) + '</b>') + (first ? '<span>' + esc(a.t) + '</span>' : '') + '<span>' + esc(a.d) + '</span><span>' + a.m + ' min</span></div>' +
+      '<h3 class="dla-h">' + esc(a.title) + '</h3></a>';
+  }
   function render(mount) {
     if (!document.getElementById('dla-css')) { var st = document.createElement('style'); st.id = 'dla-css'; st.textContent = CSS; document.head.appendChild(st); }
-    var v = vis(); if (cur >= v.length) cur = 0;
-    var h = '<div class="dla"><div><div class="dla-chips" role="group" aria-label="Filtrar por tema">';
-    TOPICS.forEach(function (t) { h += '<button type="button" class="dla-chip" data-f="' + esc(t) + '" aria-pressed="' + (t === filter) + '">' + esc(t) + '</button>'; });
-    h += '</div><ol class="dla-list">';
-    v.forEach(function (a, i) {
-      h += '<li><a class="dla-row' + (i === cur ? ' on' : '') + '" href="#' + a.id + '" data-i="' + i + '"><span class="n">' + pad(i + 1) + '</span><span class="tt">' + esc(a.title) + '</span><span class="mt"><span class="tg">' + esc(a.t) + '</span><span>' + esc(a.d) + ' 2026</span><span>' + a.m + ' min</span></span><span class="ar" aria-hidden="true">→</span></a></li>';
-    });
-    h += '</ol></div><aside class="dla-side" aria-hidden="true"><div class="dla-prev">';
-    v.forEach(function (a, i) {
-      h += '<div class="lay cv-' + a.id + (i === cur ? ' on' : '') + '" data-l="' + i + '"><span class="lb">' + esc(a.t) + ' · ' + esc(a.d) + '</span><div><div class="ph">' + esc(a.title) + '</div><span class="go">Leer artículo →</span></div></div>';
-    });
-    h += '</div><div class="dla-cnt">' + pad(v.length) + (v.length === 1 ? ' artículo' : ' artículos') + (filter === 'Todos' ? '' : ' · ' + esc(filter)) + '</div></aside></div>';
+    var h = '<div class="dla"><div class="dla-mast"><span>DeLetras · Noviembre 2026</span><span>' + A.length + ' artículos</span><span>Por Jorge Sousa</span></div>';
+    h += '<div class="dla-top">' + story(A[0], 'dla-lead', true) + '<div class="dla-side">' + story(A[1], '') + story(A[2], '') + '</div></div>';
+    h += '<div class="dla-grid">' + A.slice(3).map(function (a) { return story(a, ''); }).join('') + '</div></div>';
     mount.innerHTML = h;
   }
-  function setCur(i) {
-    cur = i;
-    [].forEach.call(document.querySelectorAll('#dla-mount .dla-row'), function (r, k) { r.classList.toggle('on', k === i); });
-    [].forEach.call(document.querySelectorAll('#dla-mount .lay'), function (r, k) { r.classList.toggle('on', k === i); });
-  }
-  document.addEventListener('pointerover', function (e) { var r = e.target.closest && e.target.closest('#dla-mount .dla-row'); if (r) setCur(+r.getAttribute('data-i')); });
-  document.addEventListener('focusin', function (e) { var r = e.target.closest && e.target.closest('#dla-mount .dla-row'); if (r) setCur(+r.getAttribute('data-i')); });
   document.addEventListener('click', function (e) {
-    var t = e.target; if (!t.closest) return;
-    var c = t.closest('#dla-mount .dla-chip');
-    if (c) { filter = c.getAttribute('data-f'); cur = 0; render(document.getElementById('dla-mount')); return; }
-    var r = t.closest('#dla-mount .dla-row');
-    if (r) {
-      e.preventDefault();
-      var a = vis()[+r.getAttribute('data-i')];
-      try { history.replaceState(null, '', location.href.split('#')[0] + '#'); } catch (x) {}
-      location.hash = a.id;
-    }
+    var r = e.target.closest && e.target.closest('#dla-mount .dla-a');
+    if (!r) return;
+    e.preventDefault();
+    try { history.replaceState(null, '', location.href.split('#')[0] + '#'); } catch (x) {}
+    location.hash = r.getAttribute('data-id');
   }, true);
   function tick() { var m = document.getElementById('dla-mount'); if (m && !m.firstChild) render(m); }
   setInterval(tick, 400); tick();
