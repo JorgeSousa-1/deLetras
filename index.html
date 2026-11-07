@@ -380,7 +380,7 @@ section[id]{scroll-margin-top:124px}
 .dk{--ink:#F4F4EE;--mute:#A9A9A0;--line:#F4F4EE;--hair:#2B2B2B;--k:#0A0A0A}
 .stretch::after{content:"";position:absolute;top:0;right:0;bottom:0;left:0}
 .hc{transition:transform .35s ease, opacity .35s ease}
-.topbar{position:sticky;top:0;z-index:60;border-bottom:2px solid #2B2B2B}
+.topbar{position:sticky;top:0;padding-top:env(safe-area-inset-top,0px);z-index:60;border-bottom:2px solid #2B2B2B}
 @media (max-width:720px){.topbar-nav{flex-wrap:nowrap !important;overflow-x:auto;width:100%;gap:0 22px !important}.topbar-nav a{flex:none;white-space:nowrap}}
 @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
 *{box-sizing:border-box}
