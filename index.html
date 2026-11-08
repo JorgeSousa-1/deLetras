@@ -1855,6 +1855,9 @@ class Component extends DCLogic {
   function likeKey(v) { return 'dlp:like:' + v.id; }
   function cKey(v) { return 'dlp:c:' + v.id; }
   function comments(v) { return sget(cKey(v), []); }
+  function sKey(v) { return 'dlp:share:' + v.id; }
+  function shares(v) { return +sget(sKey(v), 0) || 0; }
+  function addShare(v) { sset(sKey(v), shares(v) + 1); var i = VIDEOS.indexOf(v); if (items[i]) refreshActs(items[i], v); }
   function isLiked(v) { return !!sget(likeKey(v), false); }
 
   function toast(msg) {
@@ -1989,8 +1992,9 @@ class Component extends DCLogic {
     var like = it.querySelector('[data-act="like"]'), n = (isLiked(v) ? 1 : 0);
     like.classList.toggle('on', isLiked(v)); like.setAttribute('aria-pressed', isLiked(v) ? 'true' : 'false');
     like.querySelector('.n').textContent = n ? fmtN(n) : 'Me gusta';
-    var cc = comments(v).length + 1;
-    it.querySelector('[data-act="comment"] .n').textContent = fmtN(cc);
+    var cc = comments(v).length, sc = shares(v);
+    it.querySelector('[data-act="comment"] .n').textContent = cc ? fmtN(cc) : 'Comentar';
+    it.querySelector('[data-act="share"] .n').textContent = sc ? fmtN(sc) : 'Compartir';
   }
   function setLike(v, on, animate) {
     var i = VIDEOS.indexOf(v), it = items[i]; if (!it) return;
@@ -2048,7 +2052,7 @@ class Component extends DCLogic {
 
   function renderComments(i) {
     var v = VIDEOS[i], list = comments(v), me = sget('dlp:name', '');
-    var h = '<div class="dlp-sh"><h4>Comentarios<span>' + (list.length + 1) + '</span></h4><button class="dlp-ib" data-x aria-label="Cerrar comentarios">' + IC.close + '</button></div>' +
+    var h = '<div class="dlp-sh"><h4>Comentarios<span>' + list.length + '</span></h4><button class="dlp-ib" data-x aria-label="Cerrar comentarios">' + IC.close + '</button></div>' +
       '<div class="dlp-clist">' +
       '<div class="dlp-c pin"><span class="a">De</span><div class="b"><div class="n">DeLetras <b>Fijado</b></div><div class="x">' + esc(v.pinned) + '</div></div></div>';
     if (!list.length) h += '<div class="dlp-empty">Sé el primero en comentar.<br>Dime qué te ha parecido y qué otro tema quieres ver.</div>';
@@ -2086,9 +2090,10 @@ class Component extends DCLogic {
       (navigator.share ? '<button class="dlp-more" data-native type="button">Más opciones…</button>' : '');
     shareEl.innerHTML = h;
     shareEl.querySelector('[data-x]').addEventListener('click', closeSheets);
-    shareEl.querySelector('[data-copy]').addEventListener('click', function () { copyText(link); });
+    shareEl.querySelector('[data-copy]').addEventListener('click', function () { copyText(link); addShare(v); });
+    [].forEach.call(shareEl.querySelectorAll('a.dlp-so'), function (a) { a.addEventListener('click', function () { addShare(v); }); });
     var nb = shareEl.querySelector('[data-native]');
-    if (nb) nb.addEventListener('click', function () { navigator.share({ title: v.title, text: text, url: link }).catch(function () {}); });
+    if (nb) nb.addEventListener('click', function () { navigator.share({ title: v.title, text: text, url: link }).then(function () { addShare(v); }).catch(function () {}); });
     closeSheets(); scrimEl.classList.add('show'); shareEl.classList.add('show');
   }
 
