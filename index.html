@@ -561,6 +561,7 @@ Escuchar una columna
     var r = e.target.closest && e.target.closest('#dla-mount .dla-a');
     if (!r) return;
     e.preventDefault();
+    if (r.getAttribute('data-id') === 'reportaje-alimerka' && window.dlOpenVideo) { window.dlOpenVideo.apply(null, window.DL_ALIMERKA); return; }
     try { history.replaceState(null, '', location.href.split('#')[0] + '#'); } catch (x) {}
     location.hash = r.getAttribute('data-id');
   }, true);
@@ -1483,7 +1484,7 @@ class Component extends DCLogic {
     }
 
     const heroItems = [
-      { cv: 'cv-alimerka', label: 'Reportaje · Vídeo', title: 'El descanso en disputa: la plantilla de Alimerka contra su nuevo calendario', anchor: 'reportaje-alimerka', open: (e) => { if (this.swiped && e && e.preventDefault) e.preventDefault(); } },
+      { cv: 'cv-alimerka', label: 'Reportaje · Vídeo', title: 'El descanso en disputa: la plantilla de Alimerka contra su nuevo calendario', anchor: 'reportaje-alimerka', open: (e) => { if (e && e.preventDefault) e.preventDefault(); if (!this.swiped && window.dlOpenVideo) window.dlOpenVideo.apply(null, window.DL_ALIMERKA); } },
       { cv: 'cv-farol', label: 'Columna', title: docs.farol.title, open: (e) => { if (e && e.preventDefault) e.preventDefault(); if (!this.swiped) this.setState({ reader: 'farol' }); } },
       { cv: 'cv-nucleo', label: 'Artículo', title: docs.nucleo.title, open: (e) => { if (e && e.preventDefault) e.preventDefault(); if (!this.swiped) this.setState({ reader: 'nucleo' }); } },
       { cv: 'cv-septima', label: 'Artículo', title: docs.septima.title, open: (e) => { if (e && e.preventDefault) e.preventDefault(); if (!this.swiped) this.setState({ reader: 'septima' }); } },
@@ -2234,6 +2235,37 @@ class Component extends DCLogic {
 })();
 
 </script>
+<script id="dlv-script">
+/* Reproductor a pantalla completa para los reportajes en vídeo */
+window.dlOpenVideo = function (src, poster, title) {
+  var old = document.getElementById('dlv'); if (old) old.remove();
+  var ov = document.createElement('div'); ov.id = 'dlv';
+  ov.setAttribute('role', 'dialog'); ov.setAttribute('aria-modal', 'true'); ov.setAttribute('aria-label', title || 'Vídeo');
+  ov.style.cssText = 'position:fixed;inset:0;z-index:2147483000;background:rgba(8,8,10,.94);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:16px;opacity:0;transition:opacity .25s';
+  ov.innerHTML = '<button type="button" aria-label="Cerrar vídeo" style="position:absolute;top:14px;right:14px;width:46px;height:46px;border-radius:999px;border:2px solid #FBFBF8;background:transparent;color:#FBFBF8;font-size:26px;line-height:1;cursor:pointer">×</button>' +
+    '<video controls autoplay playsinline preload="auto" style="width:min(1100px,100%);max-height:78vh;aspect-ratio:16/9;background:#000;border-radius:12px;box-shadow:0 30px 80px rgba(0,0,0,.6)"></video>' +
+    '<div style="color:#FBFBF8;font:700 clamp(16px,2.2vw,22px)/1.25 Newsreader,Georgia,serif;text-align:center;max-width:1100px"></div>';
+  var v = ov.querySelector('video'); v.src = src; if (poster) v.poster = poster;
+  ov.querySelector('div').textContent = title || '';
+  var prevOverflow = document.documentElement.style.overflow;
+  function close() {
+    try { v.pause(); } catch (e) {}
+    document.removeEventListener('keydown', onKey);
+    document.documentElement.style.overflow = prevOverflow;
+    ov.style.opacity = '0'; setTimeout(function () { ov.remove(); }, 250);
+  }
+  function onKey(e) { if (e.key === 'Escape') close(); }
+  ov.addEventListener('click', function (e) { if (e.target === ov) close(); });
+  ov.querySelector('button').addEventListener('click', close);
+  document.addEventListener('keydown', onKey);
+  document.documentElement.style.overflow = 'hidden';
+  document.body.appendChild(ov);
+  requestAnimationFrame(function () { ov.style.opacity = '1'; });
+  var p = v.play(); if (p && p.catch) p.catch(function () {});
+  ov.querySelector('button').focus({ preventScroll: true });
+};
+window.DL_ALIMERKA = ['media/reportaje-alimerka.mp4', 'media/poster-alimerka.jpg', 'El descanso en disputa: la plantilla de Alimerka contra su nuevo calendario'];
+</script>
 <script id="dlc-script">
 (function () {
   'use strict';
@@ -2403,6 +2435,7 @@ class Component extends DCLogic {
       return;
     }
     var c = CARDS[i];
+    if (c.hash === 'reportaje-alimerka' && window.dlOpenVideo) { e.preventDefault(); window.dlOpenVideo.apply(null, window.DL_ALIMERKA); return; }
     if (c.hash) {
       e.preventDefault();
       try { history.replaceState(null, '', location.href.split('#')[0] + '#'); } catch (x) {}
